@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Main Control</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/index.css">
+
+    <!-- Font Awesome JS -->
+    <script src="js/solid.js"></script>
+    <script src="js/fontawesome.js"></script>
+
+    <!-- For ROS websockets -->
+    <script type="text/javascript" src="js/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="js/roslib.min.js"></script>
+
+    <!--   Pyscript --> 
+    <!-- <link rel="stylesheet" href="css/pyscript.css" />
+    <script defer src="js/pyscript.js"></script>-->
+
+</head>
+
+
+<!-- BODY START-->
+<body>
+
+    <nav>
+        <ul class="nav justify-content-center">
+            <li class="nav-item">
+                <div class="btn-group">
+                    <button onclick="update_file_list();" type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      CAD Files
+                    </button>
+                    <div class="dropdown-menu" id="cad_list">
+                        <a class="dropdown-item" href="#">empty</a>
+                      </div>
+                    
+                  </div>
+            </li>
+            &nbsp;
+            <li class="nav-item">
+                <div class="btn-group">
+                    <button onclick="update_file_list();" type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Scan Files
+                    </button>
+                    <div class="dropdown-menu" id="scan_list">
+                        <a class="dropdown-item" href="#">empty</a>
+                      </div>
+                    
+                  </div>
+            </li>
+            &nbsp;
+            <li class="nav-item">
+                <div class="btn-group">
+                    <button onclick="update_file_list();" type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      CAD-CAL Files
+                    </button>
+                    <div class="dropdown-menu" id="cadcal_list">
+                        <a class="dropdown-item" href="#">empty</a>
+                      </div>
+                    
+                  </div>
+            </li>
+            &nbsp;
+            <li class="nav-item">
+                <div class="btn-group">
+                    <button onclick="update_file_list();" type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Traj Files
+                    </button>
+                    <div class="dropdown-menu" id="traj_list">
+                        <a class="dropdown-item" href="#">empty</a>
+                      </div>
+                    
+                  </div>
+            </li>
+          </ul>
+    </nav>
+
+<div class="wrapper">
+    
+        <!-- Sidebar -->
+        <nav id="sidebar">
+
+            <div class="sidebar-header">
+                <h3>Main Control</h3>
+            </div>
+    
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#pageSubmenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Camera</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu1">
+                        <li>
+                            <a href="#" onclick="usb_cam();">usb cam</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="rgb_cam();">Realsense RGB</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="depth_cam();">Realsense Depth</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="robotA_cam();">Robot A</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="robotB_cam();">Robot B</a>
+                        </li>
+
+                    </ul>
+                   
+                </li>
+
+                
+                <li>
+                    <a href="#pageSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sensors</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu2">
+                        <li>
+                            <a id="vlx1" href="#">vlx1: </a>
+                        </li>
+                        <li>
+                            <a id="vlx2" href="#">vlx2: </a>
+                        </li>
+                        <li>
+                            <a id="vlx3" href="#">vlx3: </a>
+                        </li>
+                        <li>
+                            <a id="vlx4" href="#">vlx4: </a>
+                        </li>
+                        <li>
+                            <a id="powerA" href="#">Power A: </a>
+                        </li>
+                        <li>
+                            <a id="powerB" href="#">Power B: </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#pageSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">3D Scanner</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu3">
+                        <li>
+                            <a onclick="start_scan();" href="#">Generate 3D Scan</a>
+                        </li>
+                        <li>
+                            <a onclick="view_scan();" href="#">View 3D Scan</a>
+                        </li>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col" style="margin-top: 10px;">
+                                    <li>
+                                        <div class="mb-3" style="text-align: center;">
+                                            <input id="th_x" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="th_x">
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="col" style="margin-top: 10px;">
+                                    <li>
+                                        <div class="mb-3" style="text-align: center;">
+                                            <input id="th_y" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="th_y">
+                                        </div>
+                                    </li>
+                                </div>
+                                <div class="col" style="margin-top: 10px;">
+                                    <li>
+                                        <div class="mb-3" style="text-align: center;">
+                                            <input id="th_z" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="th_z">
+                                        </div>
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                        <li>
+                            <div class="mb-3" style="text-align: center;">
+                                <button onclick="update_settings();" type="button" class="btn-danger" style="text-decoration: solid;">Update initial Align</button>
+                            </div>
+                        </li>
+
+                        <li>
+                            <a onclick="calibrate_cad();" href="#">Calibrate CAD</a>
+                        </li>
+                        <li>
+                            <a onclick="view_calcad();" href="#">View Calibrated CAD</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubmenu4" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Optimizer Settings</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu4">
+                        <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="h_mm" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="h(mm)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="w1" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="w1(0-1)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="w3" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="w3(0-1)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="a_mm" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="a(mm)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="beta1" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="beta1">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="vmin" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="vmin(m/s)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="d_ideal" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="d_ideal(um)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="eq_slicing" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="eq slicing">
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="w4" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="w4 (0-1)">
+                                    </div>
+                                </li>
+                            </div>
+                            <div class="col">
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="cad_scan" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="CAD=0/SCAN=1">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="w2" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="w2(0-1)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="b_mm" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="b(mm)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="beta2" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="beta2">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="vmax" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="vmax(m/s)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="kmax" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="kmax(um/s)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="th" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="th (rad)">
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="mb-3" style="text-align: center;">
+                                        <input id="surf" type="text" class="form-control form-control-sm" id="exampleFormControlInput1" placeholder="surf {0, 1}">
+                                    </div>
+                                </li>
+                            </div>
+                        </div>
+                    </div>
+                        
+                        <li>
+                            <div class="mb-3" style="text-align: center;">
+                                <button onclick="update_settings();" type="button" class="btn-danger" style="text-decoration: solid;">Update</button>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                
+                <li>
+                    <a href="#pageSubmenu5" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Traj Optimizer</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu5">
+
+                        <li>
+                            <a onclick="plan_traj();" href="#">Plan Traj</a>
+                        </li>
+                        <li>
+                            <a onclick="optimize_traj();" href="#">Plan & Opt Traj</a>
+                        </li>
+                        <li>
+                            <a onclick="view_traj();" href="#">View Traj</a>
+                        </li>
+                        <li>
+                            <a onclick="view_coating();" href="#">View Coating Thickness</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="#pageSubmenu6" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Upload Traj</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu6">
+                        <li>
+                            <a onclick="upload_trajA();" href="#">Robot A</a>
+                        </li>
+                        <li>
+                            <a onclick="upload_trajB();" href="#">Robot B</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#pageSubmenu7" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Stop Traj</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu7">
+                        <li>
+                            <a onclick="stop_trajA();" href="#">Robot A</a>
+                        </li>
+                        <li>
+                            <a onclick="stop_trajB();" href="#">Robot B</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#pageSubmenu8" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Validate</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu8">
+                        <li>
+                            <a id="simind" onclick="validate_3Dscan();" href="#">3D Scan Accuracy: nan</a>
+                        </li>
+                        <li>
+                            <a href="#pageSubmenu9" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Energy</a>
+                            <ul class="collapse list-unstyled" id="pageSubmenu9">
+                                <li>
+                                    <a id="energy_comp" onclick="validate_energy();" href="#">Computed: </a>
+                                </li>
+                                <li>
+                                    <a id="energy_act" onclick="validate_energy();" href="#">Actual: </a>
+                                </li>            
+                            </ul>
+                        </li>
+                            
+                        <li>
+                            <a href="#pageSubmenu10" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Paint Quality</a>
+                            <ul class="collapse list-unstyled" id="pageSubmenu10">
+                                <li>
+                                    <a id="pquality_comp" onclick="validate_pquality();" href="#">Computed: </a>
+                                </li>
+                                <li>
+                                    <a id="pquality_act" onclick="validate_pquality();" href="#">Actual: </a>
+                                </li>            
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="manual_control.html" >Manual Control</a>
+                </li>
+            </ul>
+        </nav>
+
+        
+</div>
+
+<!--  container for video element  -->
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        <div class="col" style="text-align: center;">
+            <img id="vid_src" src="http://0.0.0.0:8080/stream?topic=/camera/color/image_raw" width="640" height="480" alt="Loading error">
+        </div>
+    </div>
+</div>
+
+<br><br><br>
+<div class="container">
+    <div class="row">
+        <div class="col" style="text-align: center;">
+            <h5 id="global_msg">Server Messages </h5>
+        </div>
+    </div>
+</div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <!-- Popper.JS -->
+    <script src="js/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- My Custom Script -->
+    <script src="js/index.js"></script>
+
+</body>
+<!-- BODY END-->
+
+</html>

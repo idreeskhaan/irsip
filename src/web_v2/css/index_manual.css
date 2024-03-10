@@ -1,0 +1,58 @@
+.selector-for-some-widget {
+    box-sizing: content-box;
+  }
+
+body {
+    font-size: 16px;
+    font-family: 'Oxygen', 'sans-serif';
+    color: black;
+
+}
+
+#header-nav {
+    background-color: black;
+    border-radius: 0;
+    border: 0;
+    /*height: 100px;*/
+
+}
+
+/*Targets Footer*/
+#my_footer{
+    background-image: url("ontarioTechLogo.png");
+    background-repeat: no-repeat;
+    background-position: left;  
+    background-size: 8%;
+    
+}
+
+#my_div {
+    color: black;
+}
+
+/*Slide Show in Gallery*/
+.slide_show{
+    width: 50%;
+    height: 50%;
+}
+
+/*Center Video Frames*/
+iframe.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+/*Mirror Video Element specified by ID*/
+  #videoElement
+  {
+      transform: rotateY(180deg);
+      -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+      -moz-transform:rotateY(180deg); /* Firefox */
+  }
+
+
+  #linear_rail_box{
+    text-align: center;
+  }
+

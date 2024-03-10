@@ -1,0 +1,28 @@
+<launch>
+
+<node pkg="web_video_server" type="web_video_server" name="web_video_server"/>
+<include file="/opt/ros/noetic/share/rosbridge_server/launch/rosbridge_websocket.launch"/>
+
+
+<node pkg="irsip" type="usb_cam_pub.py" name="usb_cam_pub" args="/dev/video0"/>
+<node pkg="irsip" type="scanner.py" name="scanner"/>
+<node pkg="irsip" type="view_3dscan.py" name="view_3dscan"/>
+<node pkg="irsip" type="traj_planner.py" name="traj_planner"/>
+<node pkg="irsip" type="view_traj.py" name="view_traj"/>
+<node pkg="irsip" type="exec_traj_A.py" name="exec_traj_A"/>
+<node pkg="irsip" type="exec_traj_B.py" name="exec_traj_B"/>
+<node pkg="irsip" type="validate_3Dscan.py" name="validate_3Dscan"/>
+<node pkg="irsip" type="json_handler.py" name="json_handler"/>
+<node pkg="irsip" type="calibration.py" name="calibration"/>
+<node pkg="irsip" type="joint_opt.py" name="joint_opt"/>
+<node pkg="irsip" type="view_cadcal.py" name="view_cadcal"/>
+<node pkg="irsip" type="view_coating.py" name="view_coating"/>
+
+
+<include file="/opt/ros/noetic/share/realsense2_camera/launch/rs_camera.launch">
+<arg name="filters" value="pointcloud" />
+</include>
+
+</launch>
+
+

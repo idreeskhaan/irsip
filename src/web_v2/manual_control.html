@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control and Monitor</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index_manual.css">
+    <script type="text/javascript" src="js/eventemitter2.min.js"></script>
+    <script type="text/javascript" src="js/roslib.min.js"></script>
+   <!--<script type="text/javascript" src="js/d3.v7.min.js"></script>--> 
+    <!--<script src="https://unpkg.com/d3-3d/build/d3-3d.min.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>-->
+</head>
+<body>
+    <header>
+        <nav style="height: 100px;" class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">JetMax Control</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="coursera.html">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="gallery.html">Gallery</a>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      System
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="scanning.html">3D scanning</a></li>
+                      <li><a class="dropdown-item" href="planning.html">Trajectory Planning</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="camera.html">Monitor and Control System</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="contacts.html">Contact us</a>
+                  </li>
+                </ul>
+
+                <!--Emergeny Shutdown Panel START-->
+                <div id="emergency" >
+                    <button onclick="emergency();" type="button" class="btn btn-danger">Emergency STOP</button>
+                </div>
+                <!--Emergeny Shutdown Panel END-->
+
+              </div>
+            </div>
+          </nav>
+
+    </header> 
+    <!--Header Ended-->
+
+<!-- Main Heading for the Page START -->
+<h1 style="text-align:center ;">Integrated System for Automated Robotic Painting</h1>
+<h2 style="text-align:center ;">(Graphical User Interface)</h2>
+
+<!-- Main Heading for the Page END-->
+
+
+<!-- MAIN BODY START-->
+<!--Linear Rail Controls START-->
+<div class="container" style="text-align: center;">
+    <div class="row">
+        <div class="col">
+            <h3 id="linear_rail_box">Slider Control</h3>
+            <input onclick="publish_motor();" id="motor_control" type="range" class="form-range" min="100" max="700" id="customRange2">
+        </div>
+    </div>
+    <div class="row" style="align-items:center;">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button id="slider_pos" type="button" class="btn btn-light">Slider Position</button>
+        </div>
+        
+    </div>
+</div>
+<br>
+<!--Linear Rail Controls END-->
+
+
+
+<!--Jetmax A and B Control Panel START-->
+    <div class="container" style="text-align:center;">
+        <div class="row">
+            <div class="col"><h3>JetMax A Controls</h3>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="mb-3">
+                        <input id= "x_A" type="text" class="form-control" id="exampleFormControlInput1" placeholder="x">
+                    </div>
+                    <div class="mb-3">
+                        <input id= "y_A" type="text" class="form-control" id="exampleFormControlInput1" placeholder="y">
+                    </div>
+                    <div class="mb-3">
+                        <input id= "z_A" type="text" class="form-control" id="exampleFormControlInput1" placeholder="z">
+                    </div>
+                    <div class="mb-3">
+                        <button onclick="publish_jetmaxA();" type="button" class="btn btn-outline-success">Publish</button>
+                    </div>
+                    </div>
+            </div>
+            <div class="col"><h3>JetMax A Reading</h3>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button id="jetmaxA_status_x" type="button" class="btn btn-outline-info">x</button>
+                    <button id="jetmaxA_status_y" type="button" class="btn btn-outline-info">y</button>
+                    <button id="jetmaxA_status_z" type="button" class="btn btn-outline-info">z</button>
+                </div>
+            </div>
+            <div class="col"><h3>JetMax B Controls</h3>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <div class="mb-3">
+                        <input id="x_B" type="text" class="form-control" id="exampleFormControlInput1" placeholder="x">
+                    </div>
+                    <div class="mb-3">
+                        <input id="y_B" type="text" class="form-control" id="exampleFormControlInput1" placeholder="y">
+                    </div>
+                    <div class="mb-3">
+                        <input id="z_B" type="text" class="form-control" id="exampleFormControlInput1" placeholder="z">
+                    </div>
+                    <div class="mb-3">
+                        <button onclick="publish_jetmaxB();" type="button" class="btn btn-outline-success">Publish</button>
+                    </div>
+                    </div>
+            </div>
+            <div class="col"><h3>JetMax B Reading</h3>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button id="jetmaxB_status_x" type="button" class="btn btn-outline-info">x</button>
+                    <button id="jetmaxB_status_y" type="button" class="btn btn-outline-info">y</button>
+                    <button id="jetmaxB_status_z" type="button" class="btn btn-outline-info">z</button>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+<!--Jetmax A and B Control Panel END-->
+
+
+
+<!--Jetmax Video Feed START-->
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <img src="http://192.168.0.108:8080/stream?topic=usb_cam/image_rect_color" width="500" height="315" alt="Jetmax A Stream">
+        </div>
+        <div class="col">
+            <img src="http://192.168.0.112:8080/stream?topic=usb_cam/image_rect_color" width="500" height="315" alt="Jetmax B Stream">
+        </div>
+    </div>
+</div>
+
+<!--Jetmax Video Feed END-->
+
+<!--3D Scan Canvas START-->
+
+   
+ 
+<!--3D Scan Canvas END-->
+
+<!-- MAIN BODY END-->
+
+
+    <!--Footer Start-->
+    <footer style="margin-top:50px;" id="my_footer" class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+          <!-- Section: Form -->
+          <section class="">
+            <form action="">
+              <!--Grid row-->
+              <div class="row d-flex justify-content-center">
+                <!--Grid column-->
+                <div class="col-auto">
+                  <p class="pt-2">
+                    <strong>Contact us</strong>
+                  </p>
+                </div>
+                <!--Grid column-->
+      
+                <!--Grid column-->
+                <div class="col-md-5 col-12">
+                  <!-- Email input -->
+                  <div class="form-outline form-white mb-4">
+                    <input type="email" id="form5Example29" class="form-control" />
+                    <label class="form-label" for="form5Example29">Email address</label>
+                  </div>
+                </div>
+                <!--Grid column-->
+      
+                <!--Grid column-->
+                <div class="col-auto">
+                  <!-- Submit button -->
+                  <button type="submit" class="btn btn-outline-light mb-4">
+                    Submit
+                  </button>
+                </div>
+                <!--Grid column-->
+              </div>
+              <!--Grid row-->
+            </form>
+          </section>
+          <!-- Section: Form -->
+        </div>
+        <!-- Grid container -->
+      
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2022 Copyrights Reserved: Idrees Khan
+            <!--<a class="text-white" href="https://ontariotechu.ca/">ontarioTech</a>-->
+        </div>
+        <!-- Copyright -->
+      </footer>
+
+
+<script src="js/popper.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/index_manual.js"></script>
+
+</body>
+</html>
