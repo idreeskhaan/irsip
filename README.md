@@ -92,8 +92,7 @@ firefox ~/catkin_ws/src/irsip/src/web_v2/index.html
 
 ### License Info
 ```json
-{"author": "Muhammad Idrees",
-"email": "idreeskhan3647@gmail.com",
+{"author": "Idrees, M.",
 "Institute": "University of Ontario Institute of Technology",
 "Paper": "ARSIP: Automated Robotic System for Industrial Painting",
 "doi": "https://doi.org/10.3390/technologies12020027",
